@@ -14,7 +14,7 @@ from tastytrade_sdk.market_data.streamer_symbol_translation import StreamerSymbo
 
 
 class LoopThread(threading.Thread):
-    def __init__(self, activity: Callable, timeout_seconds: int = 0):
+    def __init__(self, activity: Callable, timeout_seconds: float = 0.001):
         threading.Thread.__init__(self)
         self.__running = True
         self.__activity = activity
@@ -31,6 +31,7 @@ class LoopThread(threading.Thread):
             return
         start = time.time()
         while self.__running and time.time() - start <= self.__timeout_seconds:
+            time.sleep(0.001)
             continue
 
     def stop(self):
